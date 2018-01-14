@@ -19,10 +19,10 @@ class Process(object):
             inst = parts[0]
             args = parts[1:]
 
-            print(inst, args)
+            # print(inst, args)
             instructions[inst](*args)
-            print(self.registry)
-            print()
+            # print(self.registry)
+            # print()
             # print(self.sp)
 
             if _sp == self.sp: # dont move stack pointer if we performed a jump

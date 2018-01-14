@@ -3,7 +3,6 @@ from queue import Queue
 from collections import defaultdict
 
 
-
 class Process(object):
     def __init__(self, p):
         self.sp = 0
@@ -16,7 +15,6 @@ class Process(object):
         self.pid = p
         self.registry['p'] = p
         self.times_sent = 0
-        print(self.registry)
 
     def step(self):
         if self.sp >= len(self.stack):
@@ -29,10 +27,10 @@ class Process(object):
         inst = parts[0]
         args = parts[1:]
 
-        print(self.pid, self.sp, inst, args)
+        # print(self.pid, self.sp, inst, args)
         self.instructions[inst](*args)
-        print(self.registry)
-        print()
+        # print(self.registry)
+        # print()
 
         self.locked = inst == "rcv" and self.sp == _sp
 
@@ -108,7 +106,7 @@ class SndInstruction(Instruction):
     name = "snd"
 
     def __call__(self, x):
-        print(f'sent {self.value(x)}')
+        # print(f'sent {self.value(x)}')
         self.process.other_process.messages.put_nowait(self.value(x))
         self.process.sp += 1
         self.process.times_sent += 1
@@ -156,11 +154,11 @@ while True:
     process1.step()
     process2.step()
 
-    print()
-    print('********************************')
+    # print()
+    # print('********************************')
 
     if process1.locked and process2.locked:
-        print('Deadlock detected')
+        # print('Deadlock detected')
         break
 
-print(process1.times_sent, process2.times_sent)
+print(process2.times_sent)
